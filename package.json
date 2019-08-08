@@ -1,0 +1,26 @@
+{
+  "name": "forecast",
+  "version": "1.0.0",
+  "description": "Forecast by WP Perf",
+  "author": "Peter Toi <peter@petertoi.com>",
+  "license": "GPL-2.0+",
+  "homepage": "https://wp-perf.io",
+  "repository": "git@github.com:wp-perf/forecast.git",
+  "scripts": {
+    "lint": "npm run lint:styles && npm run lint:scripts",
+    "lint:styles": "cross-env stylelint './assets/styles/**/*.scss' --syntax scss",
+    "lint:scripts": "cross-env eslint './assets/scripts/**/*.js'",
+    "i18n": "npm run i18n:textdomain && npm run i18n:pot",
+    "i18n:textdomain": "npx wpi18n addtextdomain --exclude=node_modules",
+    "i18n:pot": "npx wpi18n makepot"
+  },
+  "devDependencies": {
+    "@wordpress/eslint-plugin": "^2.4.0",
+    "cross-env": "^5.2.0",
+    "eslint": "^6.1.0",
+    "node-wp-i18n": "^1.2.3",
+    "stylelint": "^10.1.0",
+    "stylelint-config-wordpress": "^14.0.0"
+  },
+  "dependencies": {}
+}

@@ -7,16 +7,16 @@
  * Version:            1.0.0
  * Requires at least:  @TODO WordPress version requirement
  * Requires PHP:       @TODO PHP version requirement
- * Author:             Peter Toi
- * Author URI:         https://petertoi.com
- * License:            GPLv3
- * License URI:        @TODO licence URI
+ * Author:             WP Perf
+ * Author URI:         https://wp-perf.io
+ * License:            GPL-2.0+
+ * License URI:        http://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:        wpp-forecast
- * Domain Path:        @TODO language path
+ * Domain Path:        /languages
  * Network:            @TODO can this be activated network wide?
  */
 
-use WP_Perf\Forecast\Core as Forecast;
+use WP_Perf\Forecast\Plugin as Forecast;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -24,6 +24,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 require_once 'autoloader.php';
+
 
 /**
  * Global function providing access to the plugin.

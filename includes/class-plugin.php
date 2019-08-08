@@ -1,6 +1,6 @@
 <?php
 /**
- * Filename class-core.php
+ * Filename class-plugin.php
  *
  * @package WP_Perf\Forecast
  * @author  Peter Toi <peter@petertoi.com>
@@ -21,7 +21,7 @@ namespace WP_Perf\Forecast;
  * @package    WP_Perf\Forecast
  * @author     Peter Toi <peter@petertoi.com>
  */
-class Core {
+class Plugin {
 
 	use Singleton;
 
@@ -47,10 +47,13 @@ class Core {
 	 * Called explicitly after the first instantiation to init the plugin.
 	 *
 	 * @param $plugin_file
+	 *
+	 * @return Plugin The singleton instance.
 	 */
 	public function initialize( $plugin_file ) {
+		// Only initialize once.
 		if ( isset( $this->plugin_file ) ) {
-			return false;
+			return $this;
 		}
 
 		$this->plugin_file = $plugin_file;
@@ -58,12 +61,14 @@ class Core {
 		/**
 		 * Plugin lifecycle hooks
 		 */
-		\register_activation_hook( $plugin_file, __NAMESPACE__ . '\\Core::activation' );
-		\register_deactivation_hook( $plugin_file, __NAMESPACE__ . '\\Core::deactivation' );
-		\register_uninstall_hook( $plugin_file, __NAMESPACE__ . '\\Core::uninstall' );
+		\register_activation_hook( $plugin_file, __NAMESPACE__ . '\\Plugin::activation' );
+		\register_deactivation_hook( $plugin_file, __NAMESPACE__ . '\\Plugin::deactivation' );
+		\register_uninstall_hook( $plugin_file, __NAMESPACE__ . '\\Plugin::uninstall' );
 
 		/**
 		 * Translations
+		 *
+		 * @see plugins_loaded
 		 */
 		\add_action( 'plugins_loaded', function () {
 			\load_plugin_textdomain(
@@ -72,6 +77,15 @@ class Core {
 				$this->get_plugin_rel_path( 'languages' )
 			);
 		}, 100 );
+
+		/**
+		 * Load the CRON task for updating the weather as provided.
+		 */
+
+		/**
+		 * Return reference to the instance
+		 */
+		return $this;
 	}
 
 	/**
