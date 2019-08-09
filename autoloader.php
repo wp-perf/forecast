@@ -32,7 +32,7 @@ try {
 			'trait',
 		];
 
-		$base_dir = __DIR__ . DIRECTORY_SEPARATOR . 'includes' . DIRECTORY_SEPARATOR;
+		$base_dir = __DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR;
 
 		// Check if the class is a member of this package.
 		if ( substr( $class, 0, strlen( $namespace ) ) !== $namespace ) {

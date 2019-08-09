@@ -25,7 +25,6 @@ if ( ! defined( 'WPINC' ) ) {
 
 require_once 'autoloader.php';
 
-
 /**
  * Global function providing access to the plugin.
  *

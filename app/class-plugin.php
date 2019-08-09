@@ -79,6 +79,19 @@ class Plugin {
 		}, 100 );
 
 		/**
+		 * Enqueue Assets
+		 */
+		add_action( 'wp_enqueue_scripts', function () {
+			wp_enqueue_script( 'wpp-forecast/main', $this->get_assets_url( 'js/main.js' ), [ 'jquery' ], null, true );
+			wp_enqueue_style( 'wpp-forecast/main', $this->get_assets_url( 'css/main.css' ), [], null, 'all' );
+		} );
+
+		add_action( 'admin_enqueue_scripts', function () {
+//			wp_enqueue_script( 'wpp-forecast/main', $this->get_assets_url( 'js/main.js' ), [ 'jquery' ], false, true );
+//			wp_enqueue_style( 'wpp-forecast/main', $this->get_assets_url( 'js/main.css' ), [], false, 'all' );
+		} );
+
+		/**
 		 * Load the CRON task for updating the weather as provided.
 		 */
 
@@ -139,8 +152,9 @@ class Plugin {
 	 * @return string
 	 */
 	public function get_assets_url( $path ) {
+		// Load assets manifest
 		if ( ! isset( $this->assets ) ) {
-			$manifest = $this->get_plugin_path( 'dist/assets.json' );
+			$manifest = $this->get_plugin_path( 'public/mix-manifest.json' );
 			if ( file_exists( $manifest ) ) {
 				$this->assets = json_decode( file_get_contents( $manifest ), true ); // phpcs:ignore
 			} else {
@@ -148,9 +162,12 @@ class Plugin {
 			}
 		}
 
+		// Ensure path starts with '/'
+		$path = str_replace( '//', '/', '/' . $path );
+
 		$url = ( isset( $this->assets[ $path ] ) )
-			? $this->get_plugin_url( 'dist/' . $this->assets[ $path ] )
-			: $this->get_plugin_url( 'dist/' . $path );
+			? $this->get_plugin_url( 'public' . $this->assets[ $path ] )
+			: $this->get_plugin_url( 'public' . $path );
 
 		return $url;
 	}
